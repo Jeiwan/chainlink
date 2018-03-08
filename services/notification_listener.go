@@ -56,7 +56,7 @@ func (nl *NotificationListener) Stop() error {
 	return nil
 }
 
-func (nl *NotificationListener) subscribeJobs(jobs []models.Job) error {
+func (nl *NotificationListener) subscribeJobs(jobs []models.JobSpec) error {
 	var err error
 	for _, j := range jobs {
 		err = multierr.Append(err, nl.AddJob(j))
@@ -66,7 +66,7 @@ func (nl *NotificationListener) subscribeJobs(jobs []models.Job) error {
 
 // AddJob looks for "runlog" and "ethlog" Initiators for a given job
 // and watches the Ethereum blockchain for the addresses in the job.
-func (nl *NotificationListener) AddJob(job models.Job) error {
+func (nl *NotificationListener) AddJob(job models.JobSpec) error {
 	if !nl.started || !job.IsLogInitiated() {
 		return nil
 	}
